@@ -177,13 +177,12 @@ def make200():
         response = s3_client.get_object(Bucket=out_bucket, Key=chop)
         content = response['Body'].read().decode('utf-8')  
         final =chop+':'+ content
-        print(final)
         return final,200
     except Exception as e:
         there =prediction1000['Image'] == chop
         if there.any():
-            stuff = prediction1000.loc[there,'Results'].iloc[0]
-            final1 =chop+':'+ stuff
+            results = prediction1000.loc[there,'Results'].iloc[0]
+            final1 =chop+':'+ results
             in_bucket_upload(picture.filename, in_bucket,picture.filename)
             out_bucket_upload(stuff, out_bucket, chop)
             
